@@ -2,8 +2,6 @@ package com.peng.thirdjavanio.demo.buffer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 import java.nio.IntBuffer;
 
 /**
