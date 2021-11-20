@@ -46,7 +46,7 @@ public class FileChannelDemo {
 
         FileChannel fileChannel = fileInputStream.getChannel();
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
-        fileChannel.read(byteBuffer);
+        log.info("first read: {}", fileChannel.read(byteBuffer));
         printBufferInfo(byteBuffer);
 
         // 处理读到的数据
@@ -56,6 +56,11 @@ public class FileChannelDemo {
         while (byteBuffer.position() < byteBuffer.limit()) {
             byteArray[byteBuffer.position()] = byteBuffer.get();
         }
+
+        // 再次读取
+        byteBuffer.clear();
+        // 没有数据可读返回-1
+        log.info("second read: {}", fileChannel.read(byteBuffer));
         System.out.println("FileChannel read：\n" + new String(byteArray));
 
     }
@@ -82,14 +87,46 @@ public class FileChannelDemo {
         FileChannel fileChannel = fileOutputStream.getChannel();
         int i = fileChannel.write(byteBuffer);
         log.info("i={}", i);
-        fileOutputStream.close();
         fileChannel.close();
+        fileOutputStream.close();
     }
 
     /**
      * 复制文件
      */
-    public void t3() {
+    @Test
+    public void t3() throws IOException {
+        URL resourceDir = this.getClass().getResource("/file");
+        FileInputStream fileInputStream = new FileInputStream(resourceDir.getPath() + "/1-尚硅谷项目课程系列之Elasticsearch.pdf");
+        FileOutputStream fileOutputStream = new FileOutputStream(resourceDir.getPath() + "/1-尚硅谷项目课程系列之Elasticsearch(copy).pdf");
+        copyFile(fileInputStream, fileOutputStream);
+    }
+
+    private void copyFile(FileInputStream fileInputStream, FileOutputStream fileOutputStream) throws IOException {
+        FileChannel inChannel = null;
+        FileChannel outChannel = null;
+        try {
+            inChannel = fileInputStream.getChannel();
+            outChannel = fileOutputStream.getChannel();
+
+            ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+            int readCount = 0;
+            while (inChannel.read(byteBuffer) != -1) {
+                readCount++;
+                byteBuffer.flip();
+                int outLength = outChannel.write(byteBuffer);
+                if (outLength != byteBuffer.capacity()) {
+                    log.warn("not equals[{}]，outLength={}" , readCount, outLength);
+                }
+                byteBuffer.clear();
+            }
+            log.info("final readCount={}", readCount);
+        } finally {
+            outChannel.close();
+            fileOutputStream.close();
+            inChannel.close();
+            fileInputStream.close();
+        }
     }
 
 
