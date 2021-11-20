@@ -15,7 +15,7 @@ import java.nio.channels.FileChannel;
  * @Date 2021/11/16
  */
 @Slf4j
-public class ChannelDemo {
+public class FileChannelDemo {
 
 
     /**
@@ -23,6 +23,7 @@ public class ChannelDemo {
      */
     @Test
     public void t1() throws IOException {
+        // 会从classpath（类路径）下去读取资源
         URL resource = this.getClass().getResource("/file/t1.txt");
         log.info("path: {}", resource.getPath());
         // 字节流
@@ -62,15 +63,33 @@ public class ChannelDemo {
     /**
      * 写文件
      */
-    public void t2() {
+    @Test
+    public void t2() throws IOException {
+        String s1 = "How are you?";
+        String s2 = "你好吗？";
+        String s3 = "I am fine,thanks.";
+        String s4 = "我很好，谢谢。";
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        byteBuffer.put(s1.getBytes());
+        byteBuffer.put(s2.getBytes());
+        byteBuffer.put(s3.getBytes());
+        byteBuffer.put(s4.getBytes());
 
+        byteBuffer.flip();
+        URL resource = this.getClass().getResource("/file");
+        log.info("path: {}", resource.getPath());
+        FileOutputStream fileOutputStream = new FileOutputStream(resource.getPath() + "/t2.txt");
+        FileChannel fileChannel = fileOutputStream.getChannel();
+        int i = fileChannel.write(byteBuffer);
+        log.info("i={}", i);
+        fileOutputStream.close();
+        fileChannel.close();
     }
 
     /**
      * 复制文件
      */
     public void t3() {
-
     }
 
 
