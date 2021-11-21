@@ -222,11 +222,39 @@ public class FileChannelDemo {
     }
 
     /**
-     * 随机写，不顺序写
+     * 随机写，不顺序写。
+     * 使用追加模式，且write的时候指定position。
+     * 结论：会覆盖旧内容，会将position这个位置以及之后length长度的内容更新。
      */
     @Test
-    public void t7() {
+    public void t7() throws IOException {
+        URL resource = this.getClass().getResource("/file/randomWrite.txt");
 
+        FileOutputStream outputStream = new FileOutputStream(resource.getPath(), true);
+        FileChannel fileChannel = outputStream.getChannel();
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        byteBuffer.put("abc".getBytes());
+        byteBuffer.flip();
+        int write = fileChannel.write(byteBuffer, 8);// 会覆盖写
+        log.info("write1 length:{}", write);
+        fileChannel.force(true); //强制刷盘
+
+        byteBuffer.clear();
+        byteBuffer.put("ABCDEF".getBytes());
+        byteBuffer.flip();
+        write = fileChannel.write(byteBuffer, 1); // 会覆盖写
+        log.info("write2 length:{}", write);
+        fileChannel.force(true);
+
+        byteBuffer.clear();
+        byteBuffer.put("ilikeapple.whataboutyou?yes,metoo.".getBytes());
+        byteBuffer.flip();
+        write = fileChannel.write(byteBuffer, 0); // 会覆盖写
+        log.info("write3 length:{}", write);
+        fileChannel.force(true);
+
+        fileChannel.close();
+        outputStream.close();
     }
 
     private void printBufferInfo(Buffer buffer) {
