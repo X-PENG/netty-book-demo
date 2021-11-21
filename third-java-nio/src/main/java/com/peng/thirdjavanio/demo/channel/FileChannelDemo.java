@@ -200,11 +200,25 @@ public class FileChannelDemo {
     }
 
     /**
-     * 随机读，不顺序读
+     * 随机读，不顺序读。
+     * read的时候指定position
      */
     @Test
-    public void t6() {
+    public void t6() throws IOException {
+        URL resource = this.getClass().getResource("/file/randomRead.txt");
 
+        FileInputStream inputStream = new FileInputStream(resource.getPath());
+        FileChannel inChannel = inputStream.getChannel();
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        int read = inChannel.read(byteBuffer, "I like apple.\n".length());
+        log.info("read length:{}", read);
+        byteBuffer.flip();
+        printBufferInfo(byteBuffer);
+        byte[] bytes = new byte[byteBuffer.limit()];
+        while (byteBuffer.position() < byteBuffer.limit()) {
+            bytes[byteBuffer.position()] = byteBuffer.get();
+        }
+        System.out.println("first read:\n" + new String(bytes));
     }
 
     /**
