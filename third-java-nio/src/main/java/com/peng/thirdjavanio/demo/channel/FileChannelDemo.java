@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
 
 /**
@@ -129,11 +130,88 @@ public class FileChannelDemo {
         }
     }
 
+    /**
+     * 追加文件。
+     * 结论：
+     * 1. 写文件时，是生成新文件再写，还是在原来文件的基础上追加，是由FileOutputStream决定的（append构造器参数）。
+     * 2. 若FileOutputStream是「追加模式」，则fileChannel.write就是追加写。
+     */
+    @Test
+    public void t4() throws IOException {
+        URL resource = this.getClass().getResource("/file/append.txt");
+        FileOutputStream fileOutputStream = new FileOutputStream(resource.getPath(), true);
+        FileChannel outChannel = fileOutputStream.getChannel();
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        byteBuffer.put("追加一第段\n".getBytes());
+        byteBuffer.put("追加二第段\n".getBytes());
+        byteBuffer.flip();
+        printBufferInfo(byteBuffer);
+        outChannel.write(byteBuffer);
+        outChannel.close();
+        fileOutputStream.close();
+    }
+
 
     /**
-     * 测试FileChannel又读又写
+     * 测试FileChannel又读又写。
+     * 结果：
+     * 追加的内容又可以被读到。
      */
-    public void t4() {
+    @Test
+    public void t5() throws IOException {
+        // 注意：是classpath类路径下的资源文件，不是编译前resource中的文件
+        URL resource = this.getClass().getResource("/file/readAndWrite.txt");
+        FileInputStream inputStream = new FileInputStream(resource.getPath());
+        // 从输入流获取的FileChannel不可写，只能读
+        FileChannel inChannel = inputStream.getChannel();
+        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+        inChannel.read(byteBuffer);
+        byteBuffer.flip();
+        printBufferInfo(byteBuffer);
+        byte[] bytes = new byte[byteBuffer.limit()];
+        while (byteBuffer.position() < byteBuffer.limit()) {
+            bytes[byteBuffer.position()] = byteBuffer.get();
+        }
+        System.out.println("first read:\n" + new String(bytes));
+
+//        FileOutputStream outputStream = new FileOutputStream(resource.getPath()); // 使用该构造器会先删除已存在的文件，再生成新文件
+//        FileChannel outChannel = outputStream.getChannel();
+        // 可追加
+        FileOutputStream outputStream = new FileOutputStream(resource.getPath(), true);
+        FileChannel outChannel = outputStream.getChannel();
+        byteBuffer.clear();
+        byteBuffer.put("写第一段话\n".getBytes());
+        byteBuffer.put("写第二段话\n".getBytes());
+        byteBuffer.put("写第三段话\n".getBytes());
+        byteBuffer.flip();
+        outChannel.write(byteBuffer);
+        outChannel.close();
+        outputStream.close();
+
+        byteBuffer.clear();
+        inChannel.read(byteBuffer);
+        byteBuffer.flip();
+        printBufferInfo(byteBuffer);
+        bytes = new byte[byteBuffer.limit()];
+        while (byteBuffer.position() < byteBuffer.limit()) {
+            bytes[byteBuffer.position()] = byteBuffer.get();
+        }
+        System.out.println("second read:\n" + new String(bytes));
+    }
+
+    /**
+     * 随机读，不顺序读
+     */
+    @Test
+    public void t6() {
+
+    }
+
+    /**
+     * 随机写，不顺序写
+     */
+    @Test
+    public void t7() {
 
     }
 
