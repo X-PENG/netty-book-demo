@@ -15,6 +15,7 @@ public class BufferDemo {
      * DEMO：写 读 写 读 重复读
      * 上溢：一直写会出现上溢
      * 下溢：一直读会出现下溢
+     * 总结：buffer理解成一个数组，capacity是数组容量，position是游标，limit是游标上限。
      */
     @Test
     public void t1() {
@@ -71,7 +72,8 @@ public class BufferDemo {
     }
 
     /**
-     * 使用compact压缩，可以在没读完的基础上接着写
+     * 使用compact压缩，可以在没读完的基础上接着写。
+     * 理解成：将「剩余未读的数据」往左"推"。
      */
     @Test
     public void t2() {
@@ -107,7 +109,7 @@ public class BufferDemo {
     }
 
     /**
-     * mark和reset
+     * mark和reset，前者记录position，后者重置position。
      */
     @Test
     public void t3() {
@@ -125,7 +127,7 @@ public class BufferDemo {
 
         intBuffer.flip();
         while (intBuffer.position() < intBuffer.limit()) {
-            int i = intBuffer.get();
+            int i = intBuffer.get(); // get会移动position
             if (i == 6) {
                 intBuffer.mark();
             }
