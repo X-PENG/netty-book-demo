@@ -20,7 +20,7 @@ public class FileChannelDemo {
 
 
     /**
-     * 读文件
+     * 读文件，channel.read(buffer)
      */
     @Test
     public void t1() throws IOException {
@@ -67,7 +67,7 @@ public class FileChannelDemo {
     }
 
     /**
-     * 写文件
+     * 写文件，channel.write(buffer)
      */
     @Test
     public void t2() throws IOException {
@@ -139,6 +139,7 @@ public class FileChannelDemo {
     @Test
     public void t4() throws IOException {
         URL resource = this.getClass().getResource("/file/append.txt");
+        // 流设为追加模式
         FileOutputStream fileOutputStream = new FileOutputStream(resource.getPath(), true);
         FileChannel outChannel = fileOutputStream.getChannel();
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
