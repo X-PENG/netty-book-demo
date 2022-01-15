@@ -28,6 +28,7 @@ public class Client1 {
         byteBuffer.put("hello world".getBytes());
         byteBuffer.flip();
         socketChannel.write(byteBuffer);
+//        socketChannel.shutdownOutput(); // 测试sleep之前shutdown
         Thread.sleep(10000);
         socketChannel.shutdownOutput();
         socketChannel.close();

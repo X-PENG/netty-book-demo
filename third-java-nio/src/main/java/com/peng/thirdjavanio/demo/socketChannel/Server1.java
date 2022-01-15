@@ -20,12 +20,16 @@ public class Server1 {
         serverSocketChannel.bind(new InetSocketAddress("127.0.0.1", 9001));
 //        serverSocketChannel.configureBlocking(false);
         SocketChannel socketChannel = serverSocketChannel.accept();
-        System.out.println(socketChannel);
+        // 使用非阻塞模式时，若客户端没发送数据，socketChannel.read会返回0。为什么！？因为channel没关闭，不会返回-1，但又没读到数据，因此只能返回0。
+//        socketChannel.configureBlocking(false);
+        log.info("socketChannel: {}", socketChannel);
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
-        while (socketChannel.read(byteBuffer) != -1) {
+        int readLen = 0;
+        while ((readLen = socketChannel.read(byteBuffer)) != -1) {
+            log.info("--readLen:{}--", readLen);
             byteBuffer.flip();
             byte[] bytes = new byte[byteBuffer.limit()];
-            while (byteBuffer.position() < byteBuffer.limit()) {
+            while (byteBuffer.hasRemaining()) {
                 bytes[byteBuffer.position()] = byteBuffer.get();
             }
             log.info("receive: {}", new String(bytes));

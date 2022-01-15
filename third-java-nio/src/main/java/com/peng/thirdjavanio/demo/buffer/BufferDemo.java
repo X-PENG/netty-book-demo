@@ -2,6 +2,8 @@ package com.peng.thirdjavanio.demo.buffer;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+
+import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 /**
@@ -141,5 +143,20 @@ public class BufferDemo {
         while (intBuffer.position() < intBuffer.limit()) {
             log.info("read: {}", intBuffer.get());
         }
+    }
+
+    /**
+     * buffer.array()
+     */
+    @Test
+    public void t4() {
+        ByteBuffer byteBuffer = ByteBuffer.allocate(10);
+        byteBuffer.put("12345".getBytes());
+        System.out.println(byteBuffer.position());
+        System.out.println(new String(byteBuffer.array(), 0, byteBuffer.position()));
+
+        byteBuffer.put("abc".getBytes());
+        System.out.println(byteBuffer.position());
+        System.out.println(new String(byteBuffer.array(), 0, byteBuffer.position()));
     }
 }
