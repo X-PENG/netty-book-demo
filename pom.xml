@@ -18,6 +18,8 @@
 
     <modules>
         <module>third-java-nio</module>
+        <module>fourth-reactor</module>
+        <module>fifth-async-callback</module>
     </modules>
 
     <properties>
