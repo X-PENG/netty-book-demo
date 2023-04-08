@@ -24,7 +24,7 @@ public class NioDiscardClient {
      * @param args
      */
     public static void main(String[] args) throws IOException, InterruptedException {
-//        for (int i = 0; i < 2; i++) {
+//        for (int i = 0; i < 2; i++) { // 测试多个客户端
             startClient();
 //        }
         while (true){
@@ -40,7 +40,7 @@ public class NioDiscardClient {
         log.info("--connected socketChannel:{}---", socketChannel);
         int i = 100;
         while (i-- > 0) {
-            // debug
+            // debug试试每次发送会发生啥
             write(socketChannel, "data" + i);
         }
         socketChannel.shutdownOutput();
