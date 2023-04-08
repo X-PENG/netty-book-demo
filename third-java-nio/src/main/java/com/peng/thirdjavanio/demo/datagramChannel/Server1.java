@@ -25,6 +25,7 @@ public class Server1 {
 
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
         SocketAddress client = null;
+        System.out.println("start receive");
         while ((client = datagramChannel.receive(byteBuffer)) != null) {
             System.out.println(client.toString());
 
