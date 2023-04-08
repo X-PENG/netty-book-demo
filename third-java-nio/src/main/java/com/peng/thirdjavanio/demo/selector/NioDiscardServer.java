@@ -71,8 +71,9 @@ public class NioDiscardServer {
                         if (readLen <= 0) {
                             log.info("readLen: {}", readLen);
                             if (readLen == -1) {
-//                                socketChannel.shutdownInput();
-//                                socketChannel.close();
+                                // 需要关闭channel，否则会一直监听到可读事件
+                                socketChannel.shutdownInput();
+                                socketChannel.close();
                             }
                             break;
                         }
