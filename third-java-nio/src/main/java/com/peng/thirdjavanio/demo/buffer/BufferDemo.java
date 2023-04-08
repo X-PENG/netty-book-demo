@@ -119,6 +119,7 @@ public class BufferDemo {
         log.info("{}", intBuffer.get(2));
         log.info("{}", intBuffer.get(1));
         log.info("{}", intBuffer.get(0));
+        printBufferInfo(intBuffer);
         // get方法才会移动position
         log.info("{}", intBuffer.get());
         log.info("{}", intBuffer.get());
