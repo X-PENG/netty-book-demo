@@ -15,8 +15,8 @@ public class BufferDemo {
 
     /**
      * DEMO：写 读 写 读 重复读
-     * 上溢：一直写会出现上溢
-     * 下溢：一直读会出现下溢
+     * 上溢：一直写，超过上限，会出现java.nio.BufferOverflowException上溢
+     * 下溢：一直读，超过上限，会出现java.nio.BufferUnderflowException下溢
      * 总结：buffer理解成一个数组，capacity是数组容量，position是游标，limit是游标上限。
      */
     @Test
@@ -38,7 +38,9 @@ public class BufferDemo {
         for (int i = 0; i < intBuffer.limit() - 1; i++) {
             log.info("read(for): {}", intBuffer.get());
         }
+        printBufferInfo(intBuffer);
 
+        System.out.println("----测试用clear清空重新写数据----");
         // 再写入数据
         intBuffer.clear();
         printBufferInfo(intBuffer);
@@ -46,6 +48,7 @@ public class BufferDemo {
         while (intBuffer.position() < intBuffer.limit() - intBuffer.capacity() / 2) {
             intBuffer.put(start++);
         }
+        printBufferInfo(intBuffer);
 
         // 再读取数据
         intBuffer.flip();
@@ -59,9 +62,32 @@ public class BufferDemo {
         }
         printBufferInfo(intBuffer);
 
-        // 重复读取数据
+        System.out.println("----测试用rewind重新读数据----");
+        // 重新读取数据
         intBuffer.rewind();
         printBufferInfo(intBuffer);
+        while (intBuffer.position() < intBuffer.limit()) {
+            log.info("read(while): {}", intBuffer.get());
+        }
+        printBufferInfo(intBuffer);
+
+        System.out.println("----测试用rewind重新写数据----");
+        intBuffer.clear();
+        printBufferInfo(intBuffer);
+        // 写入数据
+        while (intBuffer.position() < intBuffer.limit()) {
+            intBuffer.put(intBuffer.position());
+        }
+        printBufferInfo(intBuffer);
+        // 重新写
+        intBuffer.rewind();
+        printBufferInfo(intBuffer);
+        // 重新写数据
+        while (intBuffer.position() < intBuffer.limit()) {
+            intBuffer.put(intBuffer.position()*10);
+        }
+        printBufferInfo(intBuffer);
+        intBuffer.flip();
         while (intBuffer.position() < intBuffer.limit()) {
             log.info("read(while): {}", intBuffer.get());
         }
