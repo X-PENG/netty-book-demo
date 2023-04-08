@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
@@ -35,6 +34,7 @@ public class Server1 {
             log.info("receive: {}", new String(bytes));
             byteBuffer.clear();
         }
+        socketChannel.close();
         log.info("server end");
     }
 }
