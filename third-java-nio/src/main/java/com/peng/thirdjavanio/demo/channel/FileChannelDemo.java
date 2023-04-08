@@ -64,6 +64,12 @@ public class FileChannelDemo {
         log.info("second read: {}", fileChannel.read(byteBuffer));
         System.out.println("FileChannel read：\n" + new String(byteArray));
 
+//        // 测试下用输入流获取的Channel进行写操作
+//        byteBuffer.clear();
+//        byteBuffer.put("测试一下".getBytes());
+//        byteBuffer.flip();
+//        fileChannel.write(byteBuffer); // 会报错：java.nio.channels.NonWritableChannelException
+//        fileChannel.close();
     }
 
     /**
