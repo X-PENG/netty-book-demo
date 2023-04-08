@@ -30,7 +30,7 @@ public class Client1 {
         socketChannel.write(byteBuffer);
 //        socketChannel.shutdownOutput(); // 测试sleep之前shutdown
         Thread.sleep(10000);
-        socketChannel.shutdownOutput();
+//        socketChannel.shutdownOutput();
         socketChannel.close();
         log.info("client end");
     }

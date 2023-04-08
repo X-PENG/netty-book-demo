@@ -30,6 +30,7 @@ public class NioDiscardServer {
         serverSocketChannel.bind(new InetSocketAddress("localhost", 9800));
         log.info("serverSocketChannel.validOps(): {}", serverSocketChannel.validOps());
         Selector selector = Selector.open();
+        // 若Channel没有设置成非阻塞，则注册时会报错：java.nio.channels.IllegalBlockingModeException
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 
         // 使用selector监听channel的IO事件
@@ -60,6 +61,7 @@ public class NioDiscardServer {
                         continue;
                     }
                     socketChannel.configureBlocking(false);
+                    // 若Channel没有设置成非阻塞，则注册时会报错：java.nio.channels.IllegalBlockingModeException
                     socketChannel.register(selector, SelectionKey.OP_READ);
                 } else if (selectionKey.isReadable()) {
                     log.info("--isReadable--");
