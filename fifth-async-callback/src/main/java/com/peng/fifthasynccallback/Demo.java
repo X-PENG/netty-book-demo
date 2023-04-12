@@ -57,11 +57,13 @@ public class Demo {
         ListenableFuture<?> listenableFuture = decoratedPool.submit(() -> {
             log.info("===task start===");
             try {
+                log.info("===task run===");
                 Thread.sleep(10000);
 //                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 log.error("", e);
             }
+            // 用于测试异常的
             if (throwException) {
                 log.error("===task异常===");
                 throw new RuntimeException("测试异常");
@@ -73,7 +75,7 @@ public class Demo {
 //        log.info("sleep 3s");
 //        Thread.sleep(3000);
 
-        // 注册异步回调
+        // 注册异步回调处理
         Futures.addCallback(listenableFuture, new FutureCallback<Object>() {
             @Override
             public void onSuccess(Object result) {
@@ -86,7 +88,7 @@ public class Demo {
             }
         }, decoratedPool);
 
-        log.info("sleep...");
+        log.info("主线程开启异步任务后继续推进主线任务...");
         while (true) {
             Thread.sleep(3000);
         }
@@ -167,8 +169,7 @@ public class Demo {
         Thread.sleep(3000);
         promise.setSuccess("delay");
 
-        promise.sync();
-        log.info("===sleep...===");
+        log.info("主线程开启异步任务后继续推进主线任务...");
         while (true) {
             Thread.sleep(100000);
         }
