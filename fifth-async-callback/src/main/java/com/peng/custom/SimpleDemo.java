@@ -41,6 +41,8 @@ public class SimpleDemo {
             }
         }).start();
 
+        log.info("主线程开启异步任务后继续推进主线任务...");
+
         while (true) {
             TimeUnit.SECONDS.sleep(1);
         }
@@ -76,6 +78,8 @@ public class SimpleDemo {
             }
             log.info("回调处理...任务执行结果：{}", result);
         }).start();
+
+        log.info("主线程开启异步任务后继续推进主线任务...");
 
         while (true) {
             TimeUnit.SECONDS.sleep(1);
