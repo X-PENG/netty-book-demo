@@ -26,9 +26,9 @@ public class Demo {
 
     /**
      * Guava的异步回调
-     * ListenableFuture
-     * FutureCallback
-     * Guava线程池（装饰Java线程池）
+     * ListenableFuture：异步任务的抽象
+     * FutureCallback：回调处理的抽象
+     * Guava线程池（装饰Java线程池）：用于执行异步任务
      *
      * 如何实现异步回调的？
      * 现象：可以看到回调处理线程既不是主线程也不是异步任务线程。
