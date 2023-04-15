@@ -81,8 +81,4 @@ public class Client {
             }
         }
     }
-
-    public static void printBufferInfo(Buffer buffer, int writeRound) {
-        log.info("writeRound:{}, position:{}, limit:{}, capacity:{}", writeRound, buffer.position(), buffer.limit(), buffer.capacity());
-    }
 }
