@@ -119,7 +119,6 @@ class IOHandler implements Handler {
             byte[] bufferArray = readBuffer.array();
             byte[] data = new byte[read];
             System.arraycopy(bufferArray, 0, data, 0, read);
-            // TODO readBuffer.array()有问题
             log.info("read data from client[{}] read:{}, msg:{}", socketChannel.getRemoteAddress(), read, new String(data, StandardCharsets.UTF_8));
             readBuffer.flip();
 

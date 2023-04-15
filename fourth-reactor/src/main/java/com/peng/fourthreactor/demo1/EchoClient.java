@@ -40,6 +40,7 @@ public class EchoClient {
 
                 if (curKey.isConnectable()) {
                     log.info("connect success {}", curChannel.finishConnect());
+                    // 连接完则写数据
                     curKey.interestOps(SelectionKey.OP_WRITE);
                 }
 
@@ -50,6 +51,8 @@ public class EchoClient {
                     // 简单处理，不考虑缓冲区满的问题，认为能一次写入
                     int write = curChannel.write(buffer);
                     log.info("client send:{}", write);
+
+                    // 写完后再读来自服务端响应的数据
                     curKey.interestOps(SelectionKey.OP_READ);
                 }
 
@@ -69,6 +72,9 @@ public class EchoClient {
                     byte[] data = new byte[read];
                     System.arraycopy(bufferArray, 0, data, 0, read);
                     log.info("receive data from server: {}", new String(data));
+
+                    // 读完服务端响应直接close
+                    curChannel.close();
                 }
             }
         }
