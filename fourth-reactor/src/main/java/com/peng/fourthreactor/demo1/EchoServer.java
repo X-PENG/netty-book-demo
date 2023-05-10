@@ -20,8 +20,6 @@ import java.util.Set;
  * 感觉reactor不应该理解分发给哪个handler，reactor本身只是负责监听和分发，但具体分发给哪个handler是业务逻辑，不应该由reactor负责，
  * reactor应该约定一个协议，要求注册的channel实现handler路由分发逻辑，而reactor只负责在有IO事件时触发分发。
  *
- * @author xiezhipeng <xiezhipeng.peng@bytedance.com>
- * @Date 2023/04/15
  */
 @Slf4j
 public class EchoServer {

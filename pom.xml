@@ -20,6 +20,7 @@
         <module>third-java-nio</module>
         <module>fourth-reactor</module>
         <module>fifth-async-callback</module>
+        <module>sixth-netty-demo</module>
     </modules>
 
     <properties>

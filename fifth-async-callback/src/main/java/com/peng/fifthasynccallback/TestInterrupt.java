@@ -3,10 +3,6 @@ package com.peng.fifthasynccallback;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
-/**
- * @author xiezhipeng <xiezhipeng.peng@bytedance.com>
- * @Date 2022/02/16
- */
 @Slf4j
 public class TestInterrupt {
 

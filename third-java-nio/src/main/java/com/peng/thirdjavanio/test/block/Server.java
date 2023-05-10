@@ -14,10 +14,6 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
-/**
- * @author xiezhipeng <xiezhipeng.peng@bytedance.com>
- * @Date 2023/04/15
- */
 @Slf4j
 public class Server {
     public static void main(String[] args) throws IOException {

@@ -11,10 +11,6 @@ import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.FileChannel;
 
-/**
- * @author xiezhipeng <xiezhipeng.peng@bytedance.com>
- * @Date 2021/11/16
- */
 @Slf4j
 public class FileChannelDemo {
 

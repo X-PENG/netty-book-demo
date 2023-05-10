@@ -7,10 +7,6 @@ import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
-/**
- * @author xiezhipeng <xiezhipeng.peng@bytedance.com>
- * @Date 2021/11/21
- */
 @Slf4j
 public class Server1 {
     public static void main(String[] args) throws IOException, InterruptedException {

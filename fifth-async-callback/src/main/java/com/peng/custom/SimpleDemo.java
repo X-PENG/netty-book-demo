@@ -5,10 +5,6 @@ import org.junit.Test;
 
 import java.util.concurrent.*;
 
-/**
- * @author xiezhipeng <xiezhipeng.peng@bytedance.com>
- * @Date 2023/04/11
- */
 @Slf4j
 public class SimpleDemo {
 

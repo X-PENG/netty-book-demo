@@ -6,10 +6,6 @@ import org.junit.Test;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
-/**
- * @author xiezhipeng <xiezhipeng.peng@bytedance.com>
- * @Date 2021/11/06
- */
 @Slf4j
 public class BufferDemo {
 

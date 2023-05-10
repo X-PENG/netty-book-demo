@@ -10,10 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author xiezhipeng <xiezhipeng.peng@bytedance.com>
- * @Date 2022/01/15
- */
 @Slf4j
 public class NioDiscardClient {
     public static List<SocketChannel> socketChannelList = new ArrayList<>();

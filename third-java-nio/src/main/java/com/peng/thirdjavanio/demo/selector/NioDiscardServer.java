@@ -12,10 +12,6 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
-/**
- * @author xiezhipeng <xiezhipeng.peng@bytedance.com>
- * @Date 2022/01/15
- */
 @Slf4j
 public class NioDiscardServer {
 
